@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мое приложение</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Мое приложение в Telegram!</h1>
+        <p>Это работает прямо в мессенджере!</p>
+        
+        <button class="btn" onclick="showAlert()">Нажми меня!</button>
+        <button class="btn" onclick="getUserData()">Мой профиль</button>
+        
+        <div id="userData"></div>
+    </div>
+
+    <script>
+        // Инициализация Telegram Web App
+        let tg = window.Telegram.WebApp;
+        
+        // Развернуть на весь экран
+        tg.expand();
+        
+        // Получить данные пользователя
+        function getUserData() {
+            const user = tg.initDataUnsafe.user;
+            document.getElementById('userData').innerHTML = `
+                <h3>Ваш профиль:</h3>
+                <p>Имя: ${user.first_name}</p>
+                <p>Username: @${user.username}</p>
+                <p>ID: ${user.id}</p>
+            `;
+        }
+        
+        function showAlert() {
+            tg.showAlert("Привет из Telegram Web App!");
+        }
+        
+        // Кнопка "Назад" в Telegram
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => {
+            tg.close();
+        });
+    </script>
+</body>
+</html>
